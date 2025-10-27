@@ -4,19 +4,15 @@ Complete machine catalog application for industrial companies, deployed on Verce
 
 ## 🚀 Quick Deploy
 
-1. Push to GitHub
+1. Push to GitHub ✅
 2. Import to [Vercel](https://vercel.com)
 3. Add environment variables
 4. Deploy!
-
-**See [DEPLOY_INSTRUCTIONS.md](./DEPLOY_INSTRUCTIONS.md) for details.**
 
 ## 📁 Project Structure
 
 ```
 ├── api/                # Vercel serverless functions
-│   ├── machines.js     # Get all machines
-│   ├── admin/          # Admin endpoints
 ├── lib/                # MongoDB connection
 ├── models/             # Mongoose models
 ├── frontend/           # React application
@@ -81,4 +77,3 @@ Vercel serverless doesn't store files. Options:
 ## 📄 License
 
 MIT
-
