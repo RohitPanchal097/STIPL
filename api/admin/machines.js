@@ -4,7 +4,7 @@ import Machine from '../../models/Machine';
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') {
@@ -14,6 +14,34 @@ export default async function handler(req, res) {
 
   try {
     await connectToDatabase();
+    
+    // Check if ID is in query (for dynamic routes)
+    const { id } = req.query;
+    
+    // Handle PUT and DELETE if ID exists
+    if (id && (req.method === 'PUT' || req.method === 'PATCH')) {
+      const machine = await Machine.findByIdAndUpdate(
+        id,
+        req.body,
+        { new: true, runValidators: true }
+      );
+      
+      if (!machine) {
+        return res.status(404).json({ message: 'Machine not found' });
+      }
+      
+      return res.status(200).json(machine);
+    }
+    
+    if (id && req.method === 'DELETE') {
+      const machine = await Machine.findById(id);
+      if (!machine) {
+        return res.status(404).json({ message: 'Machine not found' });
+      }
+
+      await Machine.findByIdAndDelete(id);
+      return res.status(200).json({ message: 'Machine deleted' });
+    }
     
     if (req.method === 'GET') {
       // Get all machines
@@ -31,6 +59,7 @@ export default async function handler(req, res) {
 
     return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
+    console.error('Error in api/admin/machines.js:', error);
     res.status(500).json({ message: error.message });
   }
 }

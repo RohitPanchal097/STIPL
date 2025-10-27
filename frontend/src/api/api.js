@@ -37,14 +37,14 @@ export const createMachine = (data) => {
 
 export const updateMachine = (id, data) => {
   const token = getToken();
-  return api.put(`/admin/machines/${id}`, data, {
+  return api.put(`/admin/machines?id=${id}`, data, {
     headers: { Authorization: `Bearer ${token}` }
   });
 };
 
 export const deleteMachine = (id) => {
   const token = getToken();
-  return api.delete(`/admin/machines/${id}`, {
+  return api.delete(`/admin/machines?id=${id}`, {
     headers: { Authorization: `Bearer ${token}` }
   });
 };
