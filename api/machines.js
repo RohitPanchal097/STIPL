@@ -1,12 +1,10 @@
-import mongoose from 'mongoose';
 import { connectToDatabase } from '../lib/mongodb';
 import Machine from '../models/Machine';
 
 export default async function handler(req, res) {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method === 'OPTIONS') {
@@ -24,10 +22,7 @@ export default async function handler(req, res) {
     res.status(200).json(machines);
   } catch (error) {
     console.error('Error in api/machines:', error);
-    res.status(500).json({ 
-      message: error.message,
-      error: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
+    res.status(500).json({ message: error.message });
   }
 }
 
