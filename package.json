@@ -1,0 +1,17 @@
+{
+  "name": "machine-catalog-vercel",
+  "version": "1.0.0",
+  "description": "Machine Catalog - Deployed on Vercel",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": ["machine-catalog", "vercel", "react", "mongodb"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vercel": "^34.0.0"
+  }
+}
